@@ -1,5 +1,6 @@
+import Config from "./config";
 import express from "express";
-import "dotenv/config";
+import ConnectToTheDataBase from "./db";
 
 const app = express();
 app.use(express.json());
@@ -10,6 +11,12 @@ app.get("/", async (req, res) => {
   });
 });
 
-app.listen(process.env.PORT, () => {
-  console.log("sever start at the ", process.env.PORT);
-});
+ConnectToTheDataBase()
+  .then(() => {
+    app.listen(Config.Port, () => {
+      console.log("server start ", Config.Port);
+    });
+  })
+  .catch((errors) => {
+    console.log(errors);
+  });
