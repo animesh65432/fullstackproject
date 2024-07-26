@@ -4,7 +4,6 @@ import Config from "../config";
 const ConnectToTheDataBase = async () => {
   try {
     let response = await mongoose.connect(Config.databaseurl as string);
-
     return response;
   } catch (error) {
     return error;

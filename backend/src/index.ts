@@ -1,16 +1,13 @@
 import Config from "./config";
 import express from "express";
 import ConnectToTheDataBase from "./db";
+import { userRouter } from "./router";
 
 const app = express();
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get("/", async (req, res) => {
-  return res.json({
-    Message: "Just Setup The Backend",
-  });
-});
-
+app.use("/User", userRouter);
 ConnectToTheDataBase()
   .then(() => {
     app.listen(Config.Port, () => {
