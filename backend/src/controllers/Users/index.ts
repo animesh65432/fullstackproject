@@ -5,6 +5,7 @@ import bycrptjs from "bcryptjs";
 const Createtheuser = async (req: Request, res: Response) => {
   try {
     const { Name, Email, Password } = req.body;
+    console.log(req.body);
 
     if (!Name || !Email || !Password) {
       return res.status(400).json({ message: "invail creadentials" });
@@ -17,12 +18,13 @@ const Createtheuser = async (req: Request, res: Response) => {
     }
 
     let hashpassword = await bycrptjs.hash(Password, 10);
-    let newuser = await Users.create({
+    let newuser = new Users({
       Name,
       Email,
       Password: hashpassword,
     });
 
+    await newuser.save();
     return res.status(201).json({ message: "users sucessfully created" });
   } catch (error) {
     console.log(error, "Get errors from creating users");
