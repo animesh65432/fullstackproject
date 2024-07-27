@@ -17,9 +17,10 @@ const useSinguphook = (): useSinginuphooktypes => {
     console.log(data);
     setloading(true);
     try {
-      let response = await axios.post(`${baseurl}/User/create`, data);
+      await axios.post(`${baseurl}/User/create`, data);
       return true;
-    } catch (error) {
+    } catch (error: any) {
+      seterrormessage(error?.response?.data?.message);
       return false;
     } finally {
       setloading(false);

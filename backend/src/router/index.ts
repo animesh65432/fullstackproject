@@ -1,3 +1,4 @@
 import userRouter from "./Users";
+import ForGetPasswordRouter from "./ForGetPassword";
 
-export { userRouter };
+export { userRouter, ForGetPasswordRouter };

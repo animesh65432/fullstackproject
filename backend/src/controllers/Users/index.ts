@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { Users } from "../../models";
 import bycrptjs from "bcryptjs";
+import { createjsonwebtoken } from "../../utils";
 
 const Createtheuser = async (req: Request, res: Response) => {
   try {
@@ -55,8 +56,15 @@ const Logintheuser = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "Password is wrong" });
     }
 
+    let token = createjsonwebtoken({ Email });
+
+    res.cookie("token", token, {
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      httpOnly: true,
+    });
     return res.status(200).json({
       message: "sucessfully log in",
+      token,
     });
   } catch (error) {
     console.log(error, "Getting Errors From login the users");
