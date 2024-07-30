@@ -21,6 +21,6 @@ export type Tasktodotypes = {
   title: string;
   Status: string;
   Priority: string;
-  Deadline: string;
+  Deadline?: string;
   Description?: string;
 };

@@ -12,3 +12,12 @@ export type ForGetPasswordTypes = {
   active: boolean;
   user: RefType;
 };
+
+export type Taskwordtypes = {
+  title: string;
+  Status: string;
+  Priority: string;
+  Deadline?: string;
+  Description?: string;
+  user: RefType;
+};

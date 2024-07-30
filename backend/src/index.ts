@@ -2,7 +2,14 @@ import Config from "./config";
 import express from "express";
 import cookieParser from "cookie-parser";
 import ConnectToTheDataBase from "./db";
-import { userRouter, ForGetPasswordRouter } from "./router";
+import {
+  userRouter,
+  ForGetPasswordRouter,
+  TodoRouter,
+  InprogressRouter,
+  FinishedRouter,
+  UnderReviewRouter,
+} from "./router";
 import cors from "cors";
 
 const app = express();
@@ -13,6 +20,10 @@ app.use(express.json());
 
 app.use("/User", userRouter);
 app.use("/ForgetPassword", ForGetPasswordRouter);
+app.use("/underreviews", UnderReviewRouter);
+app.use("/Finsihed", FinishedRouter);
+app.use("/Todo", TodoRouter);
+app.use("/inprogress", InprogressRouter);
 ConnectToTheDataBase()
   .then(() => {
     app.listen(Config.Port, () => {

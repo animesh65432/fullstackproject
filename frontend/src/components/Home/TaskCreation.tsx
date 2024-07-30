@@ -1,12 +1,14 @@
 import React from "react";
 import { createPortal } from "react-dom";
 import { X, Star, Share } from "lucide-react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ontoogole } from "../../store/Slices/CreateTask";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CreationTododSchmea } from "../../Schema";
 import { Tasktodotypes } from "../../types";
+import { RootState } from "../../store";
+import { ondeletethefromwithname } from "../../store/Slices/CreateTask";
 
 const TaskCreation: React.FC = () => {
   const dispatch = useDispatch();
@@ -17,17 +19,18 @@ const TaskCreation: React.FC = () => {
   } = useForm<Tasktodotypes>({
     resolver: zodResolver(CreationTododSchmea),
   });
-
+  const hastaskname = useSelector(
+    (state: RootState) => state.CreateTask.hasname
+  );
+  const taskname = useSelector((state: RootState) => state.CreateTask.taskname);
   const onSubmit = (data: Tasktodotypes) => {
-    const formattedData = {
-      ...data,
-      Deadline: new Date(data.Deadline),
-    };
-    // Handle form submission with formattedData
-    console.log(formattedData);
     dispatch(ontoogole());
   };
 
+  const onbackbuttom = () => {
+    dispatch(ontoogole());
+    dispatch(ondeletethefromwithname());
+  };
   return createPortal(
     <div className="fixed inset-0 overflow-hidden">
       <div className="absolute inset-0 overflow-hidden">
@@ -45,7 +48,7 @@ const TaskCreation: React.FC = () => {
                 <div className="flex justify-between items-center mb-6">
                   <button
                     className="text-gray-400 hover:text-gray-500"
-                    onClick={() => dispatch(ontoogole())}
+                    onClick={onbackbuttom}
                     aria-label="Close"
                   >
                     <X size={20} />
@@ -76,16 +79,26 @@ const TaskCreation: React.FC = () => {
                     <label className="w-24 text-gray-500" htmlFor="status">
                       Status
                     </label>
+
                     <select
                       id="status"
                       {...register("Status")}
                       className="ml-2 border border-gray-300 p-2 rounded"
                     >
-                      <option value="">Select Status</option>
-                      <option value="To-do">To-do</option>
-                      <option value="In-Progress">In-Progress</option>
-                      <option value="Finished">Finished</option>
-                      <option value="Under-Review">Under-Review</option>
+                      {!hastaskname && (
+                        <>
+                          <option value="">Select Status</option>
+                          <option value="To-do">To-do</option>
+                          <option value="In-Progress">In-Progress</option>
+                          <option value="Finished">Finished</option>
+                          <option value="Under-Review">Under-Review</option>
+                        </>
+                      )}
+                      {hastaskname && (
+                        <option value={taskname} selected>
+                          {taskname}
+                        </option>
+                      )}
                     </select>
                     {errors.Status && (
                       <p className="text-red-500">{errors.Status.message}</p>

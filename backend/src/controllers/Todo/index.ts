@@ -1,0 +1,92 @@
+import { Request, Response } from "express";
+import { Todo } from "../../models";
+
+const Todocreate = async (req: Request, res: Response) => {
+  try {
+    const { title, Status, Priority, Description, Deadline } = req.body;
+
+    if (!title || !Status || !Priority) {
+      return res.status(400).json({
+        message: "inavild credationals",
+      });
+    }
+
+    let todo = new Todo({
+      title,
+      Status,
+      Priority,
+      Description,
+      Deadline,
+    });
+
+    await todo.save();
+
+    return res.status(201).json({
+      message: "sucessfully create the user",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "internal server errors",
+    });
+  }
+};
+
+let Tododel = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    await Todo.findByIdAndDelete(id);
+
+    return res.status(200).json({
+      message: "sucessfully delete it",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "internal server errors",
+    });
+  }
+};
+
+const Todoedit = (req: Request, res: Response) => {
+  try {
+    const { title, Status, Priority, Description, Deadline } = req.body;
+    const { id } = req.params;
+    if (!title || !Status || !Priority) {
+      return res.status(400).json({
+        message: "inavild credationals",
+      });
+    }
+
+    Todo.findByIdAndUpdate(id, {
+      title,
+      Status,
+      Priority,
+      Description,
+      Deadline,
+    });
+
+    res.status(200).json({
+      message: "sucessfully update it",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "interal server errors",
+    });
+  }
+};
+
+const TodoGet = async (req: Request, res: Response) => {
+  try {
+    const data = await Todo.find({
+      user: req.user._id,
+    });
+
+    res.status(200).json({ data });
+  } catch (error) {
+    res.status(500).json({
+      message: "internal server errors",
+    });
+  }
+};
+
+export { Todocreate, Tododel, Todoedit, TodoGet };
