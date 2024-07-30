@@ -23,6 +23,8 @@ const Signup: React.FC = () => {
       let res = await usesingupuser(data);
       if (!res) {
         toast.error(errormessage);
+      } else {
+        toast.success("Sucessfully singed up");
       }
     } catch (error) {
       console.log(error);
@@ -101,7 +103,7 @@ const Signup: React.FC = () => {
         >
           {loading ? "Loading..." : "Sign Up"}
         </button>
-        <p className="m-3">
+        <p className="m-3 ">
           Have an account ?{" "}
           <span className="text-blue-600 " onClick={navigatetosignin}>
             log in

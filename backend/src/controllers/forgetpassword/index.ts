@@ -14,7 +14,7 @@ const senttheforgetpasswordmessage = async (req: Request, res: Response) => {
 
     if (!CheckUser) {
       return res.status(400).json({
-        message: "user is not Singed up yet",
+        message: "user is not Singed  up yet",
       });
     }
 

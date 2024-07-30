@@ -78,15 +78,15 @@ const SignIn: React.FC = () => {
         >
           {loading ? "Loading..." : "Sign In"}
         </button>
-        <p className="m-3">
+        <p className="m-3 text-center">
           Don't have an account ?{" "}
-          <span className="text-blue-700 " onClick={onnavigatesingup}>
-            Creare One
+          <span className="text-blue-700" onClick={onnavigatesingup}>
+            Create account
           </span>
         </p>
 
         <p
-          className="m-2 text-blue-600 underline"
+          className="m-2 text-blue-700 text-center "
           onClick={onnavigatetoresetpassword}
         >
           Forget Password

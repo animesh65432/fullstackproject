@@ -1,11 +1,11 @@
-import { Createtheuser, Logintheuser } from "./Users";
+import { Createtheuser, Logintheuser, gettherusername } from "./Users";
 import {
   senttheforgetpasswordmessage,
   updatepasswordmessage,
 } from "./forgetpassword";
 
 const controllers = {
-  Users: { Createtheuser, Logintheuser },
+  Users: { Createtheuser, Logintheuser, gettherusername },
   ForgetPassword: { senttheforgetpasswordmessage, updatepasswordmessage },
 };
 

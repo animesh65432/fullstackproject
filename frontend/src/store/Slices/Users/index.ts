@@ -16,9 +16,16 @@ const UsersSlice = createSlice({
         localStorage.setItem("token", action.payload);
       }
     },
+
+    removethetoken: (state) => {
+      state.token = "";
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("token");
+      }
+    },
   },
 });
 
-export const { getthetoken } = UsersSlice.actions;
+export const { getthetoken, removethetoken } = UsersSlice.actions;
 
 export default UsersSlice.reducer;

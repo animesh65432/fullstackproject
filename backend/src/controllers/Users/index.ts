@@ -15,7 +15,7 @@ const Createtheuser = async (req: Request, res: Response) => {
     let CheckUser = await Users.findOne({ Email });
 
     if (CheckUser) {
-      return res.status(400).json({ message: "user alredy Singed up" });
+      return res.status(400).json({ message: "user already signed up" });
     }
 
     let hashpassword = await bycrptjs.hash(Password, 10);
@@ -41,13 +41,13 @@ const Logintheuser = async (req: Request, res: Response) => {
     const { Email, Password } = req.body;
 
     if (!Email || !Password) {
-      return res.status(400).json({ message: "invail creadentials" });
+      return res.status(400).json({ message: "invaild creadentials" });
     }
 
     let CheckUser = await Users.findOne({ Email });
 
     if (!CheckUser) {
-      return res.status(400).json({ message: "users not singed up yet" });
+      return res.status(400).json({ message: "user not singed up yet" });
     }
 
     let CheckPassword = await bycrptjs.compare(Password, CheckUser.Password);
@@ -74,4 +74,19 @@ const Logintheuser = async (req: Request, res: Response) => {
   }
 };
 
-export { Createtheuser, Logintheuser };
+const gettherusername = async (req: Request, res: Response) => {
+  try {
+    const user = await Users.findById(req.user._id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    return res.status(200).json({ user });
+  } catch (error) {
+    console.error("Error fetching username:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export { Createtheuser, Logintheuser, gettherusername };

@@ -16,3 +16,11 @@ export type UpdatePasswordtypes = {
 export type ResetPasswordtypes = {
   Email: string;
 };
+
+export type Tasktodotypes = {
+  title: string;
+  Status: string;
+  Priority: string;
+  Deadline: string;
+  Description?: string;
+};
