@@ -6,28 +6,34 @@ import { getthealltodostask } from "../store/Slices/Tasks";
 import { useDispatch } from "react-redux";
 
 interface useCreatetodotasktypes {
-  loading: boolean;
-  createInprogresstask(data: Tasktodotypes): Promise<boolean>;
+  Todoloading: boolean;
+  createTodotask(data: Tasktodotypes): Promise<boolean>;
 }
 
 const useCreatetodo = (): useCreatetodotasktypes => {
-  const [loading, setloading] = useState<boolean>(false);
+  const [Todoloading, setloading] = useState<boolean>(false);
   const dispacth = useDispatch();
 
-  const createInprogresstask = async (data: Tasktodotypes): Promise<void> => {
+  const createTodotask = async (data: Tasktodotypes): Promise<boolean> => {
     setloading(true);
     try {
-      await axios.post(`${baseurl}/Todo/create`, data);
-      let response = await axios.get(`${baseurl}/Todo/Get`);
+      await axios.post(`${baseurl}/Todo/create`, data, {
+        withCredentials: true,
+      });
+      let response = await axios.get(`${baseurl}/Todo/Get`, {
+        withCredentials: true,
+      });
       dispacth(getthealltodostask(response?.data?.data));
+      return true;
     } catch (error) {
       console.error(error);
+      return false;
     } finally {
       setloading(false);
     }
   };
 
-  return { loading, createInprogresstask };
+  return { Todoloading, createTodotask };
 };
 
 export default useCreatetodo;

@@ -1,9 +1,17 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { ontoogole } from "../../store/Slices/CreateTask";
+import {
+  ontoogole,
+  ondeletethefromwithname,
+} from "../../store/Slices/CreateTask";
 
 const Header: React.FC = () => {
   const dispacth = useDispatch();
+
+  const onclick = () => {
+    dispacth(ontoogole());
+    dispacth(ondeletethefromwithname());
+  };
   return (
     <header className="bg-white shadow-sm p-4">
       <h1 className="text-2xl font-bold mb-4">Good morning, Joe!</h1>
@@ -27,7 +35,7 @@ const Header: React.FC = () => {
         </button>
         <button
           className="px-3 py-1 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
-          onClick={() => dispacth(ontoogole())}
+          onClick={onclick}
         >
           Create new
         </button>

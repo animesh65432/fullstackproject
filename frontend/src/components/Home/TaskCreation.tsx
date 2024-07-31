@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { createPortal } from "react-dom";
 import { X, Star, Share } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,7 +9,13 @@ import { CreationTododSchmea } from "../../Schema";
 import { Tasktodotypes } from "../../types";
 import { RootState } from "../../store";
 import { ondeletethefromwithname } from "../../store/Slices/CreateTask";
-
+import {
+  useCreateFinishedTask,
+  useCreateInprogresstask,
+  useCreatetodo,
+  useCreateunderReviewtask,
+} from "../../hooks";
+import toast, { Toaster } from "react-hot-toast";
 const TaskCreation: React.FC = () => {
   const dispatch = useDispatch();
   const {
@@ -19,11 +25,58 @@ const TaskCreation: React.FC = () => {
   } = useForm<Tasktodotypes>({
     resolver: zodResolver(CreationTododSchmea),
   });
+  const [loading, setloading] = useState<boolean>(false);
+  const { finishloading, createfinishedtask } = useCreateFinishedTask();
+  const { InProgressloading, createInprogresstask } = useCreateInprogresstask();
+  const { Todoloading, createTodotask } = useCreatetodo();
+  const { underreveiewloading, CreateUnderReviews } =
+    useCreateunderReviewtask();
   const hastaskname = useSelector(
     (state: RootState) => state.CreateTask.hasname
   );
   const taskname = useSelector((state: RootState) => state.CreateTask.taskname);
-  const onSubmit = (data: Tasktodotypes) => {
+  const onSubmit = async (data: Tasktodotypes) => {
+    let res;
+
+    if (data.Status === "To-do") {
+      res = await createTodotask(data);
+      if (res) {
+        toast.success("Sucessfully create it");
+      } else {
+        toast.error("Something went wrong please try again");
+      }
+    } else if (data.Status === "In-Progress") {
+      res = await createInprogresstask(data);
+      if (res) {
+        toast.success("Sucessfully create it");
+      } else {
+        toast.error("Something went wrong please try again");
+      }
+    } else if (data.Status === "Under-Review") {
+      res = await CreateUnderReviews(data);
+      if (res) {
+        toast.success("Sucessfully create it");
+      } else {
+        toast.error("Something went wrong please try again");
+      }
+    } else {
+      res = await createfinishedtask(data);
+      if (res) {
+        toast.success("Sucessfully create it");
+      } else {
+        toast.error("Something went wrong please try again");
+      }
+    }
+    if (
+      finishloading ||
+      underreveiewloading ||
+      InProgressloading ||
+      Todoloading
+    ) {
+      setloading(true);
+    } else {
+      setloading(false);
+    }
     dispatch(ontoogole());
   };
 
@@ -155,7 +208,7 @@ const TaskCreation: React.FC = () => {
                     type="submit"
                     className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
                   >
-                    Submit
+                    {loading ? "Loading" : "Submit"}
                   </button>
                 </form>
               </div>
@@ -163,6 +216,7 @@ const TaskCreation: React.FC = () => {
           </div>
         </section>
       </div>
+      <Toaster position="top-right" reverseOrder={false} />
     </div>,
     document.getElementById("overlays") as HTMLElement
   );

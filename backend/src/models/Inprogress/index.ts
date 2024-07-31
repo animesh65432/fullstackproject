@@ -23,6 +23,7 @@ const InprogressSchema = new mongoose.Schema<Taskwordtypes>({
   user: {
     type: mongoose.Types.ObjectId,
     ref: "Users",
+    required: true,
   },
 });
 

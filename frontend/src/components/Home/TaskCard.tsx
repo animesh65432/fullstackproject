@@ -1,29 +1,34 @@
 import React from "react";
+import { useDrag } from "react-dnd";
+import { Tasktodotypes } from "../../types";
 
-type props = {
-  task: {
-    title: string;
-    description: string;
-    priority: string;
-    date: string;
-  };
-};
+interface TaskCardProps {
+  task: Tasktodotypes;
+  columnType: string;
+}
 
-const TaskCard: React.FC<props> = ({ task }) => {
-  const priorityColors = {
-    Urgent: "bg-red-100 text-red-800",
-    High: "bg-orange-100 text-orange-800",
-    Medium: "bg-yellow-100 text-yellow-800",
-    Low: "bg-green-100 text-green-800",
-  };
+const TaskCard: React.FC<TaskCardProps> = ({ task, columnType }) => {
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: "TASK",
+    item: { id: task._id, currentColumn: columnType },
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  }));
 
   return (
-    <div className="bg-white rounded-md shadow-sm p-4">
+    <div
+      ref={drag}
+      style={{ opacity: isDragging ? 0.5 : 1 }}
+      className="bg-white rounded-md shadow-sm p-4 cursor-move"
+    >
       <h3 className="font-semibold mb-2">{task.title}</h3>
-      <p className="text-sm text-gray-600 mb-2">{task.description}</p>
+      <p className="text-sm text-gray-600 mb-2">{task.Description}</p>
       <div className="flex justify-between items-center">
-        <span className="text-xs px-2 py-1 rounded-full">{task.priority}</span>
-        <span className="text-xs text-gray-500">{task.date}</span>
+        <span className="text-xs px-2 py-1 rounded-full bg-gray-200">
+          {task.Priority}
+        </span>
+        <span className="text-xs text-gray-500">{task.Deadline}</span>
       </div>
     </div>
   );

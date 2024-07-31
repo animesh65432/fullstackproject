@@ -17,6 +17,7 @@ const Inprogresscreate = async (req: Request, res: Response) => {
       Priority,
       Description,
       Deadline,
+      user: req.user._id,
     });
 
     await newinprogress.save();

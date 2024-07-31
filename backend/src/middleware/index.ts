@@ -32,10 +32,10 @@ const middleware = async (req: Request, res: Response, next: NextFunction) => {
     ) as JwtPayload;
 
     const checkUser = (await Users.findOne({
-      where: {
-        Email: verify.Email,
-      },
+      Email: verify.Email,
     })) as UsersSchemaTypes;
+
+    console.log(checkUser);
 
     if (!checkUser) {
       return res.status(400).json({

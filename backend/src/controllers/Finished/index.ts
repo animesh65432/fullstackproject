@@ -17,6 +17,7 @@ const Finishedcreate = async (req: Request, res: Response) => {
       Priority,
       Description,
       Deadline,
+      user: req.user._id,
     });
 
     await newfinish.save();

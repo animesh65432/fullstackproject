@@ -6,21 +6,23 @@ import { useDispatch } from "react-redux";
 import { getheunderreviews } from "../store/Slices/Tasks";
 
 interface useCreateunderReviewtypes {
-  loading: boolean;
-  createInprogresstask(data: Tasktodotypes): Promise<boolean>;
+  underreveiewloading: boolean;
+  CreateUnderReviews(data: Tasktodotypes): Promise<boolean>;
 }
 
 const useCreateunderReviewtask = (): useCreateunderReviewtypes => {
-  const [loading, setloading] = useState<boolean>(false);
+  const [underreveiewloading, setloading] = useState<boolean>(false);
   const dispacth = useDispatch();
 
-  const createInprogresstask = async (
-    data: Tasktodotypes
-  ): Promise<boolean> => {
+  const CreateUnderReviews = async (data: Tasktodotypes): Promise<boolean> => {
     setloading(true);
     try {
-      await axios.post(`${baseurl}/Inprogress/create`, data);
-      let response = await axios.get(`${baseurl}/Inprogress/Get`);
+      await axios.post(`${baseurl}/underreviews/create`, data, {
+        withCredentials: true,
+      });
+      let response = await axios.get(`${baseurl}/underreviews/Get`, {
+        withCredentials: true,
+      });
       dispacth(getheunderreviews(response?.data?.data));
       return true;
     } catch (error) {
@@ -31,7 +33,7 @@ const useCreateunderReviewtask = (): useCreateunderReviewtypes => {
     }
   };
 
-  return { loading, createInprogresstask };
+  return { underreveiewloading, CreateUnderReviews };
 };
 
 export default useCreateunderReviewtask;

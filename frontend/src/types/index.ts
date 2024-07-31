@@ -18,6 +18,7 @@ export type ResetPasswordtypes = {
 };
 
 export type Tasktodotypes = {
+  _id: string;
   title: string;
   Status: string;
   Priority: string;

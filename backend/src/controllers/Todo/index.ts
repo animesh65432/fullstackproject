@@ -17,12 +17,13 @@ const Todocreate = async (req: Request, res: Response) => {
       Priority,
       Description,
       Deadline,
+      user: req.user._id,
     });
 
     await todo.save();
 
     return res.status(201).json({
-      message: "sucessfully create the user",
+      message: "sucessfully created",
     });
   } catch (error) {
     return res.status(500).json({

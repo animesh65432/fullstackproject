@@ -6,19 +6,23 @@ import { useDispatch } from "react-redux";
 import { getheallfiniehdetasks } from "../store/Slices/Tasks";
 
 interface useCreateFinishedTasktypes {
-  loading: boolean;
+  finishloading: boolean;
   createfinishedtask(data: Tasktodotypes): Promise<boolean>;
 }
 
 const useCreateFinishedTask = (): useCreateFinishedTasktypes => {
   const dispacth = useDispatch();
-  const [loading, setloading] = useState<boolean>(false);
+  const [finishloading, setloading] = useState<boolean>(false);
 
   const createfinishedtask = async (data: Tasktodotypes): Promise<any> => {
     setloading(true);
     try {
-      await axios.post(`${baseurl}/Finished/create`, data);
-      let response = await axios.get(`${baseurl}/Finished/Get`);
+      await axios.post(`${baseurl}/Finsihed/create`, data, {
+        withCredentials: true,
+      });
+      let response = await axios.get(`${baseurl}/Finsihed/Get`, {
+        withCredentials: true,
+      });
       dispacth(getheallfiniehdetasks(response?.data?.data));
       return true;
     } finally {
@@ -27,7 +31,7 @@ const useCreateFinishedTask = (): useCreateFinishedTasktypes => {
     }
   };
 
-  return { loading, createfinishedtask };
+  return { finishloading, createfinishedtask };
 };
 
 export default useCreateFinishedTask;

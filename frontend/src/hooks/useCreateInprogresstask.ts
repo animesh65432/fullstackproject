@@ -6,12 +6,12 @@ import { useDispatch } from "react-redux";
 import { gettheinprogress } from "../store/Slices/Tasks";
 
 interface useCreateInprogresstasktypes {
-  loading: boolean;
+  InProgressloading: boolean;
   createInprogresstask(data: Tasktodotypes): Promise<boolean>;
 }
 
 const useCreateInprogresstask = (): useCreateInprogresstasktypes => {
-  const [loading, setloading] = useState<boolean>(false);
+  const [InProgressloading, setloading] = useState<boolean>(false);
   const dispacth = useDispatch();
 
   const createInprogresstask = async (
@@ -19,8 +19,12 @@ const useCreateInprogresstask = (): useCreateInprogresstasktypes => {
   ): Promise<boolean> => {
     setloading(true);
     try {
-      await axios.post(`${baseurl}/Inprogress/create`, data);
-      let response = await axios.get(`${baseurl}/Inprogress/Get`);
+      await axios.post(`${baseurl}/inprogress/create`, data, {
+        withCredentials: true,
+      });
+      let response = await axios.get(`${baseurl}/inprogress/Get`, {
+        withCredentials: true,
+      });
       dispacth(gettheinprogress(response?.data?.data));
       return true;
     } catch (error) {
@@ -31,7 +35,7 @@ const useCreateInprogresstask = (): useCreateInprogresstasktypes => {
     }
   };
 
-  return { loading, createInprogresstask };
+  return { InProgressloading, createInprogresstask };
 };
 
 export default useCreateInprogresstask;

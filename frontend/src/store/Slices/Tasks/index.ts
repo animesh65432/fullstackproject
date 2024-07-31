@@ -20,7 +20,7 @@ const TaskSlices = createSlice({
     getheallfiniehdetasks: (state, action) => {
       state.Finshed = action.payload;
     },
-    removethefinishedtask: (state, action) => {
+    removethefinishedtask: (state) => {
       state.Finshed = [];
     },
     getthealltodostask: (state, action) => {
@@ -32,10 +32,11 @@ const TaskSlices = createSlice({
     gettheinprogress: (state, action) => {
       state.Inprogress = action.payload;
     },
-    removetheinprohress: (state) => {
+    removetheinprogress: (state) => {
       state.Inprogress = [];
     },
     getheunderreviews: (state, action) => {
+      console.log(action.payload);
       state.UnderReviews = action.payload;
     },
     removetheunderreviews: (state) => {
@@ -48,7 +49,7 @@ export const {
   removethefinishedtask,
   getheallfiniehdetasks,
   getthealltodostask,
-  removetheinprohress,
+  removetheinprogress,
   getheunderreviews,
   gettheinprogress,
   removetheunderreviews,
