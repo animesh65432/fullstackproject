@@ -1,7 +1,7 @@
 import axios from "axios";
 import { baseurl } from "../utils";
 import { useDispatch } from "react-redux";
-import { gettheinprogress, removetheinprogress } from "../store/Slices/Tasks";
+import { gettheinprogress } from "../store/Slices/Tasks";
 
 interface UseGetinprocessReturnTypes {
   Getintherprocess: () => Promise<void>;
@@ -16,7 +16,7 @@ const useGetinprogess = (): UseGetinprocessReturnTypes => {
         withCredentials: true,
       });
       console.log(response);
-      dispatch(removetheinprogress());
+
       dispatch(gettheinprogress(response?.data?.data));
     } catch (error) {
       dispatch(gettheinprogress([]));

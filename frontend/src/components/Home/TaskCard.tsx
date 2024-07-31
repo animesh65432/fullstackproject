@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDrag } from "react-dnd";
 import {
   useDeleteFinishedTask,
@@ -7,6 +7,7 @@ import {
   useDeleteUnderReviewtask,
 } from "../../hooks";
 import toast, { Toaster } from "react-hot-toast";
+import TaskUpdate from "./TaskUpdate";
 
 type Tasktodotypes = {
   _id: string;
@@ -30,12 +31,17 @@ const TaskCard: React.FC<Props> = ({ task, submitthefrom }) => {
       isDragging: monitor.isDragging(),
     }),
   }));
+  const [upadte, setupadte] = useState<boolean>(false);
   const { deleteFinishtask } = useDeleteFinishedTask();
   const { deleteinprogresstak } = useDeleteInprogressTask();
   const { deletetodotask } = useDeleteTodoTask();
   const { deleteunderreviewtask } = useDeleteUnderReviewtask();
 
   const priorityClass = "bg-gray-100 text-gray-800";
+
+  const ontoogole = () => {
+    setupadte((prev) => !prev);
+  };
   const deletethetask = async (task: Tasktodotypes) => {
     let res;
     if (task.Status === "To-do") {
@@ -54,24 +60,27 @@ const TaskCard: React.FC<Props> = ({ task, submitthefrom }) => {
   };
 
   return (
-    <div
-      ref={drag}
-      className={`bg-white rounded-md shadow-sm p-4 ${
-        isDragging ? "border-2 border-slate-950" : ""
-      } ${priorityClass}`}
-    >
-      <h3 className="font-semibold mb-2">{task.title}</h3>
-      <p className="text-sm text-gray-600 mb-2">{task.Description}</p>
-      <div className="flex justify-between items-center">
-        <span className={`text-xs px-2 py-1 rounded-full ${priorityClass}`}>
-          {task.Priority}
-        </span>
-        <span className="text-xs text-gray-500">{task.Deadline}</span>
+    <>
+      <div
+        ref={drag}
+        className={`bg-white rounded-md shadow-sm p-4 ${
+          isDragging ? "border-2 border-slate-950" : ""
+        } ${priorityClass}`}
+      >
+        <h3 className="font-semibold mb-2">{task.title}</h3>
+        <p className="text-sm text-gray-600 mb-2">{task.Description}</p>
+        <div className="flex justify-between items-center">
+          <span className={`text-xs px-2 py-1 rounded-full ${priorityClass}`}>
+            {task.Priority}
+          </span>
+          <span className="text-xs text-gray-500">{task.Deadline}</span>
+          <button onClick={() => deletethetask(task)}>delete</button>\
+          <button onClick={ontoogole}>Edit</button>
+          {upadte && <TaskUpdate task={task} />}
+        </div>
       </div>
-      <button onClick={() => deletethetask(task)}>delete</button>
-
       <Toaster />
-    </div>
+    </>
   );
 };
 

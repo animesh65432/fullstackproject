@@ -2,10 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { baseurl } from "../utils";
 import { useDispatch } from "react-redux";
-import {
-  getheunderreviews,
-  removetheunderreviews,
-} from "../store/Slices/Tasks";
+import { getthealltodostask } from "../store/Slices/Tasks";
 
 type data = {
   _id: string;
@@ -18,19 +15,22 @@ type data = {
 
 interface useEditTodotypes {
   loading: boolean;
-  editunderprogresstask(data: data): Promise<boolean>;
+  edittask(data: data): Promise<boolean>;
 }
 
 const useEditTodotask = (): useEditTodotypes => {
   const [loading, setloading] = useState<boolean>(false);
   const dispacth = useDispatch();
-  const editunderprogresstask = async (data: data) => {
+  const edittask = async (data: data) => {
     setloading(true);
     try {
-      await axios.put(`${baseurl}`);
-      let response = await axios.get(`${baseurl}`);
-      dispacth(removetheunderreviews());
-      dispacth(getheunderreviews(response?.data?.data));
+      await axios.put(`${baseurl}/Todo/Edit/${data._id}`, data, {
+        withCredentials: true,
+      });
+      let response = await axios.get(`${baseurl}/Todo/Get`, {
+        withCredentials: true,
+      });
+      dispacth(getthealltodostask(response?.data?.data));
       return true;
     } catch (error) {
       console.log(error);
@@ -40,7 +40,7 @@ const useEditTodotask = (): useEditTodotypes => {
     }
   };
 
-  return { loading, editunderprogresstask };
+  return { loading, edittask };
 };
 
 export default useEditTodotask;

@@ -48,22 +48,23 @@ let Tododel = async (req: Request, res: Response) => {
   }
 };
 
-const Todoedit = (req: Request, res: Response) => {
+const Todoedit = async (req: Request, res: Response) => {
   try {
     const { title, Status, Priority, Description, Deadline } = req.body;
     const { id } = req.params;
+    console.log(id);
     if (!title || !Status || !Priority) {
       return res.status(400).json({
         message: "inavild credationals",
       });
     }
 
-    Todo.findByIdAndUpdate(id, {
+    await Todo.findByIdAndUpdate(id, {
       title,
       Status,
       Priority,
-      Description,
       Deadline,
+      Description,
     });
 
     res.status(200).json({

@@ -8,7 +8,6 @@ import useDeleteTodoTask from "./useDeleteTodoTask";
 import useDeleteUnderReviewtask from "./useDeleteUnderReviewtask";
 import useEditTodotask from "./useEditTodoTask";
 import useEditunderprogresstask from "./useEditunderprogresstask";
-import useEditInprogressTask from "./useEditunderprogresstask";
 import useEditFinishedTask from "./useEditFinishedTask";
 import useSinginhook from "./useSinginhook";
 import useSinguphook from "./useSinguphook";
@@ -16,6 +15,7 @@ import useGetFinishedTask from "./useGetFinishedTask";
 import useGetinprogess from "./useGetInprogressTask";
 import useGettodo from "./useGetTheTodoTask";
 import useGetUnderprogress from "./useGetUnderprogress";
+import useEditInprogressTask from "./useEditInprogressTask";
 export {
   useSinginhook,
   useSinguphook,
@@ -28,11 +28,11 @@ export {
   useDeleteTodoTask,
   useDeleteUnderReviewtask,
   useEditFinishedTask,
-  useEditInprogressTask,
   useEditTodotask,
   useEditunderprogresstask,
   useGetFinishedTask,
   useGetinprogess,
   useGettodo,
   useGetUnderprogress,
+  useEditInprogressTask,
 };

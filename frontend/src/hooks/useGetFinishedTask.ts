@@ -1,10 +1,7 @@
 import axios from "axios";
 import { baseurl } from "../utils";
 import { useDispatch } from "react-redux";
-import {
-  getheallfiniehdetasks,
-  removethefinishedtask,
-} from "../store/Slices/Tasks";
+import { getheallfiniehdetasks } from "../store/Slices/Tasks";
 
 interface UseGetFinishedTaskReturnTypes {
   GetTheFinishedTask: () => Promise<void>;
@@ -19,7 +16,7 @@ const useGetFinishedTask = (): UseGetFinishedTaskReturnTypes => {
         withCredentials: true,
       });
       console.log(response);
-      dispatch(removethefinishedtask());
+
       dispatch(getheallfiniehdetasks(response?.data?.data));
     } catch (error) {
       dispatch(getheallfiniehdetasks([]));

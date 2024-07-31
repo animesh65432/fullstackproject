@@ -1,10 +1,7 @@
 import axios from "axios";
 import { baseurl } from "../utils";
 import { useDispatch } from "react-redux";
-import {
-  getheunderreviews,
-  removetheunderreviews,
-} from "../store/Slices/Tasks";
+import { getheunderreviews } from "../store/Slices/Tasks";
 
 interface UseUnderProgressreturntypes {
   GetUnderProgress: () => Promise<void>;
@@ -20,7 +17,7 @@ const useGetUnderprogress = (): UseUnderProgressreturntypes => {
       });
       let data = response?.data?.data;
       console.log(data);
-      dispatch(removetheunderreviews());
+
       dispatch(getheunderreviews(data));
     } catch (error) {
       dispatch(getheunderreviews([]));

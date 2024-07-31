@@ -1,7 +1,7 @@
 import axios from "axios";
 import { baseurl } from "../utils";
 import { useDispatch } from "react-redux";
-import { getthealltodostask, reomvethetodotask } from "../store/Slices/Tasks";
+import { getthealltodostask } from "../store/Slices/Tasks";
 
 interface UseGettodoreturntypes {
   GetTheTodos: () => Promise<void>;

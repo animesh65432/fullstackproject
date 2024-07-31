@@ -8,14 +8,14 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 
 const TaskBoard: React.FC = () => {
   return (
-    <DndProvider backend={HTML5Backend}>
-      <div className="flex space-x-4 p-4 overflow-x-auto">
+    <div className="flex space-x-4 p-4 overflow-x-auto">
+      <DndProvider backend={HTML5Backend}>
         <To_do />
         <Inprogress />
         <Under_review />
         <Finished />
-      </div>
-    </DndProvider>
+      </DndProvider>
+    </div>
   );
 };
 

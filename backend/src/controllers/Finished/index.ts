@@ -48,9 +48,10 @@ let Finisheddel = async (req: Request, res: Response) => {
   }
 };
 
-const Finishededit = (req: Request, res: Response) => {
+const Finishededit = async (req: Request, res: Response) => {
   try {
     const { title, Status, Priority, Description, Deadline } = req.body;
+    console.log(title, Status, Priority, Description, Deadline);
     const { id } = req.params;
     if (!title || !Status || !Priority) {
       return res.status(400).json({
@@ -58,14 +59,14 @@ const Finishededit = (req: Request, res: Response) => {
       });
     }
 
-    Finished.findByIdAndUpdate(id, {
+    let finished = await Finished.findByIdAndUpdate(id, {
       title,
       Status,
       Priority,
-      Description,
       Deadline,
+      Description,
     });
-
+    console.log(finished);
     res.status(200).json({
       message: "sucessfully update it",
     });

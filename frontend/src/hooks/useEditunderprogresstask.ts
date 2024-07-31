@@ -2,10 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { baseurl } from "../utils";
 import { useDispatch } from "react-redux";
-import {
-  getheunderreviews,
-  removetheunderreviews,
-} from "../store/Slices/Tasks";
+import { getheunderreviews } from "../store/Slices/Tasks";
 
 type data = {
   _id: string;
@@ -27,9 +24,12 @@ const useEditunderprogresstask = (): useEditunderprogresstaskreturntypes => {
   const editunderprogresstask = async (data: data) => {
     setloading(true);
     try {
-      await axios.put(`${baseurl}`);
-      let response = await axios.get(`${baseurl}`);
-      dispacth(removetheunderreviews());
+      await axios.put(`${baseurl}/underreviews/Edit/${data._id}`, data, {
+        withCredentials: true,
+      });
+      let response = await axios.get(`${baseurl}/underreviews/Get`, {
+        withCredentials: true,
+      });
       dispacth(getheunderreviews(response?.data?.data));
       return true;
     } catch (error) {

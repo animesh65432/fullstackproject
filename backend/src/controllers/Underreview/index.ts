@@ -48,22 +48,23 @@ let underReviewdel = async (req: Request, res: Response) => {
   }
 };
 
-const underReviewedit = (req: Request, res: Response) => {
+const underReviewedit = async (req: Request, res: Response) => {
   try {
     const { title, Status, Priority, Description, Deadline } = req.body;
     const { id } = req.params;
+
     if (!title || !Status || !Priority) {
       return res.status(400).json({
         message: "inavild credationals",
       });
     }
 
-    UnderReview.findByIdAndUpdate(id, {
+    await UnderReview.findByIdAndUpdate(id, {
       title,
       Status,
       Priority,
-      Description,
       Deadline,
+      Description,
     });
 
     res.status(200).json({

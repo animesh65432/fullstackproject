@@ -48,22 +48,24 @@ let Inprogressdel = async (req: Request, res: Response) => {
   }
 };
 
-const Inprogressedit = (req: Request, res: Response) => {
+const Inprogressedit = async (req: Request, res: Response) => {
   try {
     const { title, Status, Priority, Description, Deadline } = req.body;
     const { id } = req.params;
+    console.log(title, Status, Priority, Description, Deadline, id);
+
     if (!title || !Status || !Priority) {
       return res.status(400).json({
         message: "inavild credationals",
       });
     }
 
-    Inprogress.findByIdAndUpdate(id, {
+    await Inprogress.findByIdAndUpdate(id, {
       title,
       Status,
       Priority,
-      Description,
       Deadline,
+      Description,
     });
 
     res.status(200).json({
