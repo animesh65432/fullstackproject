@@ -17,10 +17,15 @@ const useDeleteFinishedTask = (): useDeleteFinishedTaskReturntypes => {
   const dispacth = useDispatch();
 
   const deleteFinishtask = async (data: data) => {
+    console.log(data._id);
     setloading(true);
     try {
-      await axios.delete(`${baseurl}/Todo/delete/${data._id}`);
-      let Response = await axios.get(`${baseurl}/Todo/Get`);
+      await axios.delete(`${baseurl}/Finsihed/delete/${data._id}`, {
+        withCredentials: true,
+      });
+      let Response = await axios.get(`${baseurl}/Finsihed/Get`, {
+        withCredentials: true,
+      });
       dispacth(getheallfiniehdetasks(Response?.data?.data));
       return true;
     } catch (error) {

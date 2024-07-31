@@ -20,8 +20,12 @@ const useDeleteInprogressTask = (): useDeleteInprogressTaskreturntypes => {
   const deleteinprogresstak = async (data: data) => {
     setloading(true);
     try {
-      await axios.delete(`${baseurl}`);
-      let Response = await axios.get(`${baseurl}`);
+      await axios.delete(`${baseurl}/inprogress/delete/${data._id}`, {
+        withCredentials: true,
+      });
+      let Response = await axios.get(`${baseurl}/inprogress/Get`, {
+        withCredentials: true,
+      });
       dispacth(gettheinprogress(Response?.data?.data));
       return true;
     } catch (error) {

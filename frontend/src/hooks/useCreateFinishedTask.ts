@@ -25,9 +25,10 @@ const useCreateFinishedTask = (): useCreateFinishedTasktypes => {
       });
       dispacth(getheallfiniehdetasks(response?.data?.data));
       return true;
+    } catch {
+      return false;
     } finally {
       setloading(false);
-      return false;
     }
   };
 

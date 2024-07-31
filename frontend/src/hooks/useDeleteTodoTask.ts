@@ -18,10 +18,15 @@ const useDeleteTodoTask = (): useDeleteTodoTskReturnTypes => {
   const dispacth = useDispatch();
 
   const deletetodotask = async (data: data) => {
+    console.log(data);
     setloading(true);
     try {
-      await axios.delete(`${baseurl}`);
-      let response = await axios.get(`${baseurl}`);
+      await axios.delete(`${baseurl}/Todo/delete/${data._id}`, {
+        withCredentials: true,
+      });
+      let response = await axios.get(`${baseurl}/Todo/Get`, {
+        withCredentials: true,
+      });
       dispacth(getthealltodostask(response?.data?.data));
       return true;
     } catch (error) {

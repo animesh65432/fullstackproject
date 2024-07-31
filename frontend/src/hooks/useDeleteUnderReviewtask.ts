@@ -16,11 +16,15 @@ const useDeleteUnderReviewtask = (): useDeleteUnderReviewtaskreturntypes => {
   const [loading, setloading] = useState<boolean>(false);
   const dispacth = useDispatch();
 
-  const deleteunderreviewtask = async () => {
+  const deleteunderreviewtask = async (data: data) => {
     setloading(true);
     try {
-      await axios.delete(`${baseurl}`);
-      let response = await axios.get(`${baseurl}`);
+      await axios.delete(`${baseurl}/underreviews/delete/${data._id}`, {
+        withCredentials: true,
+      });
+      let response = await axios.get(`${baseurl}/underreviews/Get`, {
+        withCredentials: true,
+      });
       dispacth(getheunderreviews(response?.data?.data));
       return true;
     } catch (error) {
