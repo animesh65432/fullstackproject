@@ -38,6 +38,12 @@ const Finished: React.FC = () => {
     }),
   }));
 
+  const dropRef = (node: HTMLDivElement | null) => {
+    if (node) {
+      drop(node as any);
+    }
+  };
+
   const submitthefrom = async (task: Tasktodotypes) => {
     console.log(task);
     try {
@@ -65,7 +71,7 @@ const Finished: React.FC = () => {
   };
 
   return (
-    <div ref={drop}>
+    <div ref={dropRef}>
       <div className="w-64 bg-gray-100 rounded-md p-4">
         <h2 className="text-lg font-semibold mb-4">Finished</h2>
         <div className="space-y-4">

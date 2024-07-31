@@ -33,6 +33,11 @@ const To_do: React.FC = () => {
       isOver: monitor.isOver(),
     }),
   }));
+  const dropRef = (node: HTMLDivElement | null) => {
+    if (node) {
+      drop(node as any);
+    }
+  };
   useEffect(() => {
     GetTheTodos();
   }, []);
@@ -61,7 +66,7 @@ const To_do: React.FC = () => {
   };
 
   return (
-    <div ref={drop}>
+    <div ref={dropRef}>
       <div className="w-64 bg-gray-100 rounded-md p-4">
         <h2 className="text-lg font-semibold mb-4">To do</h2>
         <div className="space-y-4">

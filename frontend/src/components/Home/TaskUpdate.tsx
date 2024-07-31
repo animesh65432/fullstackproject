@@ -56,53 +56,68 @@ const TaskUpdate: React.FC<Props> = ({ task }) => {
     } else {
       res = await editunderprogresstask(updatedTask);
     }
+
+    if (!res) {
+      toast.error("Update failed. Please try again.");
+    } else {
+      toast.success("Task updated successfully.");
+    }
   };
 
   return (
-    <div>
-      <h2>Update Task</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Title:
+    <div className="p-4 bg-white rounded-md shadow-sm">
+      <h2 className="text-xl font-semibold mb-4">Update Task</h2>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <label className="block">
+          <span className="text-gray-700">Title:</span>
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
           />
         </label>
-        <br />
-        <label>
-          Status:
-          <input type="text" value={status} />
+        <label className="block">
+          <span className="text-gray-700">Status:</span>
+          <input
+            type="text"
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+            className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          />
         </label>
-        <br />
-        <label>
-          Priority:
+        <label className="block">
+          <span className="text-gray-700">Priority:</span>
           <input
             type="text"
             value={priority}
             onChange={(e) => setPriority(e.target.value)}
+            className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
           />
         </label>
-        <br />
-        <label>
-          Deadline:
+        <label className="block">
+          <span className="text-gray-700">Deadline:</span>
           <input
             type="text"
             value={deadline}
             onChange={(e) => setDeadline(e.target.value)}
+            className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
           />
         </label>
-        <br />
-        <label>
-          Description:
+        <label className="block">
+          <span className="text-gray-700">Description:</span>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
           />
         </label>
-        <br />
-        <button type="submit">Update Task</button>
+        <button
+          type="submit"
+          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+        >
+          Update Task
+        </button>
       </form>
       <Toaster />
     </div>

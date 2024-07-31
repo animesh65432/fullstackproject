@@ -41,6 +41,11 @@ const Under_review: React.FC = () => {
   useEffect(() => {
     GetUnderProgress();
   }, []);
+  const dropRef = (node: HTMLDivElement | null) => {
+    if (node) {
+      drop(node as any);
+    }
+  };
   const submitthefrom = async (task: Tasktodotypes) => {
     try {
       let res;
@@ -66,7 +71,7 @@ const Under_review: React.FC = () => {
   };
 
   return (
-    <div ref={drop}>
+    <div ref={dropRef}>
       <div className="w-64 bg-gray-100 rounded-md p-4">
         <h2 className="text-lg font-semibold mb-4">Under Review</h2>
         <div className="space-y-4">
